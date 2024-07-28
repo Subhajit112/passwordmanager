@@ -33,8 +33,17 @@ def save_password():
     else:
         IS_ok= messagebox.askokcancel(title= "Website", message= f"The details: \nWebsite: {website_input} \nEmail: {email_input} \nPassword: {password_input} \nIs it ok to save?" )    
         if IS_ok:
-            with open("data.txt", "a") as data:
-                data.write(f"{website_input} | {email_input} | {password_input} \n")
+            try:
+                file = open("data.txt", "r")
+                file.close()
+                with open("data.txt", "a") as data:
+                    data.write(f"{website_input} | {email_input} | {password_input} \n")
+            except FileNotFoundError:
+                file = open("data.txt", "w")
+                file.close()
+                with open("data.txt", "a") as data:
+                    data.write(f"{website_input} | {email_input} | {password_input} \n")
+
     website_entry.delete(0,END)
     password_entry.delete(0, END)
 
